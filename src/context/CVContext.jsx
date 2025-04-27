@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react'
 import { jsPDF } from 'jspdf'
-import miFoto from '../assets/miFoto.jpg';
+import miFoto from '/MiFoto.jpg';
 
 
 // Create context
