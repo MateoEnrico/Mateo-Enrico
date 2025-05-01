@@ -107,23 +107,6 @@ const Navbar = ({ darkMode, setDarkMode }) => {
                 {link.name}
               </Link>
             ))}
-            <button
-              onClick={() => {
-                setDarkMode(!darkMode)
-                closeMenu()
-              }}
-              className="flex items-center w-full text-secondary-700 hover:text-primary-600 px-3 py-2 rounded-md text-base font-medium"
-            >
-              {darkMode ? (
-                <>
-                  <FaSun className="mr-2 text-yellow-500" /> Light Mode
-                </>
-              ) : (
-                <>
-                  <FaMoon className="mr-2" /> Dark Mode
-                </>
-              )}
-            </button>
           </div>
         </motion.div>
       )}
