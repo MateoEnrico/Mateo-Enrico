@@ -28,8 +28,8 @@ const Proyects = () => {
                 <div className="space-y-10">
                     <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
                         <div className="card border-l-4 border-accent-500 hover:border-accent-600">
-                            <h3 className="text-xl font-semibold text-accent-600">BlacJack Clothes</h3>
-                            <p className="text-lg font-medium text-secondary-700">E-commerce con diseño responsive realizada con WordPress, ya publicada y funcional. Usa la API de Mercado Pago y la de correo argentino para calcular costos de envío a cada sucursal y generar la etiqueta necesaria.</p>
+                            <h3 className="text-xl font-semibold text-accent-600">Blackjack Clothes – Tienda online con WordPress + WooCommerce</h3>
+                            <p className="text-lg font-medium text-secondary-700">Desarrollé de forma integral esta tienda e-commerce usando WordPress. Personalicé el diseño para reflejar la identidad de la marca, configuré WooCommerce con pasarela de pagos (Mercado Pago), métodos de envío, y gestioné el catálogo completo de productos. Implementé prácticas de diseño responsive, seguridad básica y optimización de velocidad. El <a href="www.blackjackclothes.com.ar" target="_blank" rel="noopener noreferrer" style={{color: 'blue', textDecoration: 'underline'}}>sitio</a> está publicado, funcional y preparado para escalar.</p>
                             <div style={styles.sliderContainer}>
                                 <button style={{...styles.arrowButton, ...styles.prevButton}} onClick={prevSlide}>&#10094;</button>
                                 <img src={images[currentIndex]} alt="slider" style={styles.image} />
@@ -41,8 +41,9 @@ const Proyects = () => {
                 <div className="space-y-10">
                     <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
                         <div className="card border-l-4 border-accent-500 hover:border-accent-600">
-                            <h3 className="text-xl font-semibold text-accent-600">Automatización de generación de preguntas</h3>
-                            <p className="text-lg font-medium text-secondary-700">En la empresa Eunamed, teníamos como objetivo automatizar la generación de preguntas para exámenes múltiple choise en nuestra página. Lo que hacíamos era descargar cada video que tenia la explicación de una pregunta de un examen que habían tomado, y enviarsela a gemini para que este generara 5 preguntas en formato csv y luego ir anexandolo a un excel (todo a mano). Con n8n logré automatizar este proceso de manera que solo debas descargar todos los videos a partir de los cuales quieras generar una pregunta, subirlos a una carpeta de drive y automaticamente se van a agregar con su formato correspondiente todas las preguntas a un google sheet, de forma que logré ahorrar hasta un 70% del tiempo en esta tarea a los empleados.</p>
+                            <h3 className="text-xl font-semibold text-accent-600">Automatización de generación de preguntas con n8n + Gemini</h3>
+                            <p className="text-lg font-medium text-secondary-700">Desarrollé una automatización completa en n8n para la empresa Eunamed, destinada a generar preguntas de opción múltiple a partir de videos educativos. El proceso toma automáticamente los archivos subidos a una carpeta de Google Drive, extrae el contenido, lo envía a Gemini (modelo LLM) para generar preguntas, y guarda el resultado en Google Sheets con el formato requerido. Esta solución redujo un 70% el tiempo que tomaban los empleados haciendo esta tarea manualmente.</p>
+                            <p className="text-lg font-medium text-secondary-700">Tecnologías aplicadas: n8n, Google Drive API, Google Sheets, Gemini, lógica condicional, automatización de procesos, procesamiento de texto con IA.</p>
                             <img src="/Automatizacion-preguntas.png" alt="" style={{borderRadius: "10px"}}/>
                         </div>
                     </div>
@@ -50,8 +51,9 @@ const Proyects = () => {
                 <div className="space-y-10">
                     <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
                         <div className="card border-l-4 border-accent-500 hover:border-accent-600">
-                            <h3 className="text-xl font-semibold text-accent-600">Automatización de reconocimiento de categorización</h3>
-                            <p className="text-lg font-medium text-secondary-700">Cada una de las preguntas generadas anteriormente con IA, tienen una categorización específica segun el perfil de conocimientos Eunacom. En base a ese perfil de conocimientos, este sistema se encarga de categorizar cada pregunta. Obviamente todo esto tiene que ser corregido por un médico al ser terminado ya que la IA se puede confundir pero es un gran paso.</p>
+                            <h3 className="text-xl font-semibold text-accent-600">Automatización de categorización de preguntas con IA (n8n + Gemini)</h3>
+                            <p className="text-lg font-medium text-secondary-700">Implementé una automatización en n8n para clasificar preguntas generadas por IA según el perfil de conocimientos del examen Eunacom. A través de Google Sheets y Gemini, el sistema analiza cada pregunta y la asigna a una categoría médica correspondiente. El flujo incluye validaciones, procesamiento condicional y control de calidad, reduciendo la carga de revisión manual sin eliminar la supervisión profesional.</p>
+                            <p className="text-lg font-medium text-secondary-700">Tecnologías utilizadas: n8n, Google Sheets, Google Gemini, lógica condicional, categorización con IA, automatización de procesos educativos.</p>
                             <img src="/Conseguir-codigo.png" alt="" style={{borderRadius: "10px"}}/>
                         </div>
                     </div>
@@ -59,8 +61,8 @@ const Proyects = () => {
                 <div className="space-y-10">
                     <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
                         <div className="card border-l-4 border-accent-500 hover:border-accent-600">
-                            <h3 className="text-xl font-semibold text-accent-600">Automatización de envío de mails</h3>
-                            <p className="text-lg font-medium text-secondary-700">En la empresa Eunamed, teníamos como objetivo automatizar el envío de un mail cada vez que se llenaba el formulario de reconocimiento de título. Esto era un poco complicado ya que dependiendo de que país fuera cada título, el mail debía ir a otro destinatario. Con n8n logré automatizar el envío de ese mail, asique hice que un empleado pueda ocuparse de otra cosa más importante para la empresa y no perder el tiempo con esta tarea repetitiva.</p>
+                            <h3 className="text-xl font-semibold text-accent-600">Automatización del envío de correos por país de origen del título – Eunamed</h3>
+                            <p className="text-lg font-medium text-secondary-700">Desarrollé una solución automatizada en n8n para la empresa Eunamed, orientada al envío de correos electrónicos cada vez que se completaba un formulario de reconocimiento de título. El desafío principal era que, según el país de origen del título, los mails debían dirigirse a distintos destinatarios. Implementé una lógica condicional con múltiples ramas utilizando webhooks, filtros y nodos de Gmail, logrando reducir a cero la intervención humana en esta tarea rutinaria. Esta automatización no solo eliminó errores manuales, sino que liberó tiempo valioso para el equipo administrativo.</p>
                             <img src="/Reconocimiento-titulo.png" alt="" style={{borderRadius: "10px"}}/>
                         </div>
                     </div>

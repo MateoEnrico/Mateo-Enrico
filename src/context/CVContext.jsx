@@ -99,7 +99,9 @@ const defaultCV = {
       'Aprendizaje',
       'Resolucion de problemas',
       'Gestión de tiempo y organización',
-      'Trabajo en equipo'
+      'Trabajo en equipo',
+      'Pensamiento Crítico',
+      'Comunicación efectiva'
     ]
   }
 }
