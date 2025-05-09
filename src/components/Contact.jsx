@@ -164,6 +164,7 @@ const Contact = () => {
                   id="message" 
                   name="message"
                   value={FormData.message}
+                  onChange={handleInputChange}
                   rows="4" 
                   className="w-full p-2 border border-secondary-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
                   placeholder="Tu mensaje..."
