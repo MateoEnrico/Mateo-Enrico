@@ -28,6 +28,19 @@ const Proyects = () => {
                 <div className="space-y-10">
                     <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
                         <div className="card border-l-4 border-accent-500 hover:border-accent-600">
+                            <h3 className="text-xl font-semibold text-accent-600">Agente de atencion al cliente - n8n</h3>
+                            <p className="text-lg font-medium text-secondary-700">Desarrollé e implementé un sistema automatizado de atención al cliente y gestión comercial utilizando n8n, Airtable y OpenAI.Creé un agente de WhatsApp con inteligencia artificial capaz de responder automáticamente consultas de clientes, integrado a un CRM personalizado. Diseñé flujos automatizados que centralizan y actualizan la información de prospectos en tiempo real, reduciendo tiempos de respuesta y evitando pérdidas de datos. Integré múltiples herramientas y APIs para mejorar la trazabilidad, el seguimiento de leads y la eficiencia en la comunicación. Logré reducir significativamente las tareas manuales del equipo comercial, mejorando la conversión y profesionalizando el proceso de ventas.</p>
+                            <div style={styles.sliderContainer}>
+                                <button style={{...styles.arrowButton, ...styles.prevButton}} onClick={prevSlide}>&#10094;</button>
+                                <img src={images[currentIndex]} alt="slider" style={styles.image} />
+                                <button style={{...styles.arrowButton, ...styles.nextButton}} onClick={nextSlide}>&#10095;</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="space-y-10">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                        <div className="card border-l-4 border-accent-500 hover:border-accent-600">
                             <h3 className="text-xl font-semibold text-accent-600">Blackjack Clothes – Tienda online con WordPress + WooCommerce</h3>
                             <p className="text-lg font-medium text-secondary-700">Desarrollé de forma integral esta tienda e-commerce usando WordPress. Personalicé el diseño para reflejar la identidad de la marca, configuré WooCommerce con pasarela de pagos (Mercado Pago), métodos de envío, y gestioné el catálogo completo de productos. Implementé prácticas de diseño responsive, seguridad básica y optimización de velocidad. El <a href="www.blackjackclothes.com.ar" target="_blank" rel="noopener noreferrer" style={{color: 'blue', textDecoration: 'underline'}}>sitio</a> está publicado, funcional y preparado para escalar.</p>
                             <div style={styles.sliderContainer}>
