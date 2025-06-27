@@ -16,6 +16,26 @@ const Proyects = () => {
     const prevSlide = () => {
         setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
     };
+    const images1 = [
+        '/Agente-1.png',
+        '/Agente-2.png',
+        '/Agente-3.png',
+        '/Agente-4.png',
+        '/Agente-5.png',
+        '/Agente-6.png',
+        '/Agente-7.png',
+        '/Agente-8.png',
+        '/Agente-9.png'
+    ];
+    const [currentIndex1, setCurrentIndex1] = useState(0);
+
+    const nextSlide1 = () => {
+        setCurrentIndex1((prevIndex1) => (prevIndex1 + 1) % images1.length);
+    };
+
+    const prevSlide1 = () => {
+        setCurrentIndex1((prevIndex1) => (prevIndex1 - 1 + images1.length) % images.length);
+    };
 
     return(
         <section id="proyects" className="section bg-secondary-50">
@@ -31,9 +51,9 @@ const Proyects = () => {
                             <h3 className="text-xl font-semibold text-accent-600">Agente de atencion al cliente - n8n</h3>
                             <p className="text-lg font-medium text-secondary-700">Desarrollé e implementé un sistema automatizado de atención al cliente y gestión comercial utilizando n8n, Airtable y OpenAI.Creé un agente de WhatsApp con inteligencia artificial capaz de responder automáticamente consultas de clientes, integrado a un CRM personalizado. Diseñé flujos automatizados que centralizan y actualizan la información de prospectos en tiempo real, reduciendo tiempos de respuesta y evitando pérdidas de datos. Integré múltiples herramientas y APIs para mejorar la trazabilidad, el seguimiento de leads y la eficiencia en la comunicación. Logré reducir significativamente las tareas manuales del equipo comercial, mejorando la conversión y profesionalizando el proceso de ventas.</p>
                             <div style={styles.sliderContainer}>
-                                <button style={{...styles.arrowButton, ...styles.prevButton}} onClick={prevSlide}>&#10094;</button>
-                                <img src={images[currentIndex]} alt="slider" style={styles.image} />
-                                <button style={{...styles.arrowButton, ...styles.nextButton}} onClick={nextSlide}>&#10095;</button>
+                                <button style={{...styles.arrowButton, ...styles.prevButton}} onClick={prevSlide1}>&#10094;</button>
+                                <img src={images1[currentIndex1]} alt="slider" style={styles.image} />
+                                <button style={{...styles.arrowButton, ...styles.nextButton}} onClick={nextSlide1}>&#10095;</button>
                             </div>
                         </div>
                     </div>
