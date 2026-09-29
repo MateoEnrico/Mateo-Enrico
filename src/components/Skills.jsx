@@ -1,105 +1,57 @@
-import { useCV } from '../context/CVContext'
-import { FaTools, FaLanguage, FaUserFriends } from 'react-icons/fa'
 import { motion } from 'framer-motion'
+import { useCV } from '../context/CVContext'
 
 const Skills = () => {
   const { cv } = useCV()
-  
-  // Group technical skills by category
-  const groupedSkills = cv.skills.technical.reduce((acc, skill) => {
-    if (!acc[skill.category]) {
-      acc[skill.category] = [];
-    }
-    acc[skill.category].push(skill);
-    return acc;
-  }, {});
-  
+
   return (
     <section id="skills" className="section bg-white">
-      <div className="max-w-5xl mx-auto">
-        <h2 className="section-title">
-          <span className="inline-block">
-            <FaTools className="inline mr-2 mb-1" />
-            Habilidades
-          </span>
-        </h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          {/* Technical Skills */}
-          <motion.div 
-            className="card"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <h3 className="text-xl font-semibold mb-6 text-primary-600">Habilidades técnicas</h3>
-            <div className="space-y-6">
-              {Object.entries(groupedSkills).map(([category, skills]) => (
-                <div key={category}>
-                  <h4 className="text-lg font-medium text-secondary-700 mb-3">{category}</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {skills.map((skill) => (
-                      <span
-                        key={skill.id}
-                        className="bg-primary-50 text-primary-700 px-4 py-2 rounded-lg text-sm font-medium"
-                      >
-                        {skill.name}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+      <div className="container-page">
+        <p className="eyebrow">Stack</p>
+        <h2 className="section-heading max-w-3xl">Herramientas que uso en producción, no solo en tutoriales</h2>
+
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {cv.skills.groups.map((group, index) => (
+            <motion.div
+              key={group.name}
+              className="card p-6"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.05 }}
+            >
+              <h3 className="text-base font-semibold">{group.name}</h3>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {group.items.map((item) => (
+                  <span key={item} className="chip">{item}</span>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="mt-4 grid gap-4 md:grid-cols-[1fr_2fr]">
+          <div className="card p-6">
+            <h3 className="text-base font-semibold">Idiomas</h3>
+            <ul className="mt-4 space-y-2">
+              {cv.skills.languages.map((lang) => (
+                <li key={lang.name} className="flex items-center justify-between text-sm">
+                  <span className="font-medium text-ink-800">{lang.name}</span>
+                  <span className="font-mono text-xs text-ink-500">{lang.level}</span>
+                </li>
               ))}
-            </div>
-          </motion.div>
-          
-          <div className="space-y-10">
-            {/* Languages */}
-            <motion.div 
-              className="card"
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <h3 className="text-xl font-semibold mb-4 text-primary-600 flex items-center">
-                <FaLanguage className="mr-2" />Lenguajes
-              </h3>
-              <div className="space-y-3">
-                {cv.skills.languages.map((lang) => (
-                  <div key={lang.id} className="flex items-center justify-between bg-secondary-50 p-3 rounded-lg">
-                    <span className="font-medium text-secondary-800">{lang.name}</span>
-                    <span className="bg-accent-100 text-accent-800 px-3 py-1 rounded-full text-sm">
-                      {lang.level}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-            
-            {/* Soft Skills */}
-            <motion.div 
-              className="card"
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <h3 className="text-xl font-semibold mb-4 text-primary-600 flex items-center">
-                <FaUserFriends className="mr-2" />Habilidades Blandas
-              </h3>
-              <div className="grid grid-cols-2 gap-3">
-                {cv.skills.soft.map((skill, index) => (
-                  <div 
-                    key={index}
-                    className="bg-secondary-50 text-secondary-800 p-3 rounded-lg text-center font-medium"
-                    style={{backgroundColor: "rgba(145, 206, 235, 0.3)"}}
-                  >
-                    {skill}
-                  </div>
-                ))}
-              </div>
-            </motion.div>
+            </ul>
+          </div>
+          <div className="card p-6">
+            <h3 className="text-base font-semibold">Cómo trabajo</h3>
+            <ul className="mt-4 grid gap-x-6 gap-y-3 sm:grid-cols-2">
+              {cv.skills.soft.map((item) => (
+                <li key={item.title} className="text-sm">
+                  <span className="font-medium text-ink-900">{item.title}.</span>{' '}
+                  <span className="text-ink-500">{item.text}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

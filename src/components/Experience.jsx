@@ -1,60 +1,56 @@
-import { useCV } from '../context/CVContext'
-import { FaBriefcase, FaCheck } from 'react-icons/fa'
 import { motion } from 'framer-motion'
+import { useCV } from '../context/CVContext'
 
 const Experience = () => {
   const { cv } = useCV()
-  
+
   return (
-    <section id="experience" className="section bg-white">
-      <div className="max-w-5xl mx-auto">
-        <h2 className="section-title">
-          <span className="inline-block">
-            <FaBriefcase className="inline mr-2 mb-1" />
-            Experiencia Laboral
-          </span>
-        </h2>
-        
-        <div className="space-y-10">
+    <section id="experience" className="section">
+      <div className="container-page">
+        <p className="eyebrow">Experiencia</p>
+        <h2 className="section-heading max-w-3xl">Dónde vengo construyendo</h2>
+
+        <ol className="relative mt-14 space-y-6 before:absolute before:left-[7px] before:top-2 before:h-[calc(100%-1rem)] before:w-px before:bg-ink-200 md:before:left-[calc(12rem+7px)]">
           {cv.experience.map((job, index) => (
-            <motion.div
+            <motion.li
               key={job.id}
-              className="card border-l-4 border-primary-500 hover:border-primary-600"
+              className="relative grid gap-4 pl-8 md:grid-cols-[12rem_1fr] md:gap-8 md:pl-0"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.5, delay: index * 0.08 }}
             >
-              <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                <div>
-                  <h3 className="text-xl font-semibold text-primary-600">{job.position}</h3>
-                  <p className="text-lg font-medium text-secondary-700">{job.company}</p>
-                </div>
-                <div className="mt-2 md:mt-0">
-                  <span className="inline-block bg-secondary-100 text-secondary-800 px-3 py-1 rounded-full text-sm font-medium">
-                    {job.period}
-                  </span>
-                </div>
+              <span className="absolute left-0 top-2 h-[15px] w-[15px] rounded-full border-4 border-paper bg-brand-500 md:left-[12rem]" />
+              <div className="font-mono text-xs uppercase tracking-wider text-ink-500 md:pt-1.5 md:text-right md:pr-8">
+                {job.period}
               </div>
-              
-              <p className="text-secondary-700 mb-4">{job.description}</p>
-              
-              {job.achievements && job.achievements.length > 0 && (
-                <div>
-                  <h4 className="font-medium text-secondary-900 mb-2">Experiencias:</h4>
-                  <ul className="space-y-2">
-                    {job.achievements.map((achievement, i) => (
-                      <li key={i} className="flex items-start">
-                        <FaCheck className="text-accent-500 mt-1 mr-2 flex-shrink-0" />
+              <div className="card p-6 md:ml-8 md:p-8">
+                <div className="flex flex-wrap items-baseline justify-between gap-2">
+                  <h3 className="text-xl font-semibold md:text-2xl">{job.company}</h3>
+                  <span className="text-sm font-medium text-brand-600">{job.position}</span>
+                </div>
+                <p className="mt-3 text-ink-600">{job.description}</p>
+                {job.achievements?.length > 0 && (
+                  <ul className="mt-5 space-y-2.5">
+                    {job.achievements.map((achievement) => (
+                      <li key={achievement} className="flex gap-3 text-[15px] text-ink-700">
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-400" />
                         <span>{achievement}</span>
                       </li>
                     ))}
                   </ul>
-                </div>
-              )}
-            </motion.div>
+                )}
+                {job.stack?.length > 0 && (
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {job.stack.map((tech) => (
+                      <span key={tech} className="chip">{tech}</span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </motion.li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   )

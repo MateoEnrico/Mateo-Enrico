@@ -1,116 +1,98 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-scroll'
-import { FaSun, FaMoon, FaBars, FaTimes } from 'react-icons/fa'
+import { FaBars, FaTimes } from 'react-icons/fa'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useCV } from '../context/CVContext'
-import { motion } from 'framer-motion'
 
-const Navbar = ({ darkMode, setDarkMode }) => {
+const navLinks = [
+  { name: 'Proyectos', to: 'projects' },
+  { name: 'Experiencia', to: 'experience' },
+  { name: 'Stack', to: 'skills' },
+  { name: 'Formación', to: 'education' },
+]
+
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const { cv } = useCV()
 
-  const toggleMenu = () => setIsOpen(!isOpen)
-  const closeMenu = () => setIsOpen(false)
-
-  // Change navbar style on scroll
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setScrolled(true)
-      } else {
-        setScrolled(false)
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
+    const handleScroll = () => setScrolled(window.scrollY > 20)
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const navLinks = [
-    { name: 'Inicio', to: 'hero' },
-    { name: 'Experiencia', to: 'experience' },
-    { name: 'Proyectos', to: 'proyects' },
-    { name: 'Educación', to: 'education' },
-    { name: 'Habilidades', to: 'skills' },
-    { name: 'Contacto', to: 'contact' }
-  ]
-
   return (
-    <motion.nav 
-      className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-4'
-      }`}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex-shrink-0 font-heading font-bold text-xl text-primary-600">
-            {cv.personal.name}
-          </div>
-          
-          {/* Desktop Menu */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-6">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.to}
-                  spy={true}
-                  smooth={true}
-                  offset={-70}
-                  duration={500}
-                  className="text-secondary-700 hover:text-primary-600 px-3 py-2 cursor-pointer text-sm font-medium transition-colors"
-                >
-                  {link.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-          
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={toggleMenu}
-              className="p-2 rounded-md text-secondary-700 hover:text-primary-600 focus:outline-none"
-              aria-label="Toggle Menu"
-            >
-              {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
-            </button>
-          </div>
-        </div>
-      </div>
+    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3">
+      <nav
+        className={`mx-auto flex max-w-page items-center justify-between rounded-full px-4 py-2 transition-all duration-300 sm:px-5 ${
+          scrolled ? 'border border-ink-200 bg-white/80 shadow-sm backdrop-blur-md' : 'border border-transparent'
+        }`}
+      >
+        <Link to="hero" smooth duration={500} className="flex cursor-pointer items-center gap-2">
+          <span className="grid h-8 w-8 place-items-center rounded-full bg-ink-900 font-display text-sm font-bold text-lime">
+            ME
+          </span>
+          <span className="font-display text-base font-semibold text-ink-900">{cv.personal.name}</span>
+        </Link>
 
-      {/* Mobile Menu */}
-      {isOpen && (
-        <motion.div 
-          className="md:hidden bg-white shadow-lg"
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          transition={{ duration: 0.3 }}
+        <div className="hidden items-center gap-1 md:flex">
+          {navLinks.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              spy
+              smooth
+              offset={-80}
+              duration={500}
+              activeClass="!text-ink-900 bg-ink-100"
+              className="cursor-pointer rounded-full px-4 py-2 text-sm font-medium text-ink-500 transition-colors hover:text-ink-900"
+            >
+              {link.name}
+            </Link>
+          ))}
+          <Link to="contact" smooth offset={-40} duration={500} className="btn-dark ml-2 cursor-pointer !py-2 !px-5">
+            Contacto
+          </Link>
+        </div>
+
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="rounded-full p-2 text-ink-900 md:hidden"
+          aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
+          aria-expanded={isOpen}
         >
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {navLinks.map((link) => (
+          {isOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
+        </button>
+      </nav>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className="mx-auto mt-2 max-w-page rounded-3xl border border-ink-200 bg-white p-3 shadow-lg md:hidden"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2 }}
+          >
+            {[...navLinks, { name: 'Contacto', to: 'contact' }].map((link) => (
               <Link
-                key={link.name}
+                key={link.to}
                 to={link.to}
-                spy={true}
-                smooth={true}
-                offset={-70}
+                smooth
+                offset={-80}
                 duration={500}
-                onClick={closeMenu}
-                className="block text-secondary-700 hover:text-primary-600 px-3 py-2 rounded-md text-base font-medium cursor-pointer"
+                onClick={() => setIsOpen(false)}
+                className="block cursor-pointer rounded-2xl px-4 py-3 text-base font-medium text-ink-800 hover:bg-ink-100"
               >
                 {link.name}
               </Link>
             ))}
-          </div>
-        </motion.div>
-      )}
-    </motion.nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
   )
 }
 

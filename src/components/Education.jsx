@@ -1,43 +1,33 @@
-import { useCV } from '../context/CVContext'
-import { FaGraduationCap } from 'react-icons/fa'
 import { motion } from 'framer-motion'
+import { useCV } from '../context/CVContext'
 
 const Education = () => {
   const { cv } = useCV()
-  
+
   return (
-    <section id="education" className="section bg-secondary-50">
-      <div className="max-w-5xl mx-auto">
-        <h2 className="section-title">
-          <span className="inline-block">
-            <FaGraduationCap className="inline mr-2 mb-1" />
-            Educación
-          </span>
-        </h2>
-        
-        <div className="space-y-10">
+    <section id="education" className="section">
+      <div className="container-page grid gap-12 lg:grid-cols-[1fr_2fr]">
+        <div>
+          <p className="eyebrow">Formación</p>
+          <h2 className="section-heading">Base académica y aprendizaje continuo</h2>
+        </div>
+
+        <div className="divide-y divide-ink-200 border-y border-ink-200">
           {cv.education.map((edu, index) => (
             <motion.div
               key={edu.id}
-              className="card border-l-4 border-accent-500 hover:border-accent-600"
-              initial={{ opacity: 0, y: 20 }}
+              className="grid gap-2 py-6 sm:grid-cols-[1fr_auto] sm:gap-6"
+              initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.4, delay: index * 0.06 }}
             >
-              <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                <div>
-                  <h3 className="text-xl font-semibold text-accent-600">{edu.degree}</h3>
-                  <p className="text-lg font-medium text-secondary-700">{edu.institution}</p>
-                </div>
-                <div className="mt-2 md:mt-0">
-                  <span className="inline-block bg-secondary-100 text-secondary-800 px-3 py-1 rounded-full text-sm font-medium">
-                    {edu.period}
-                  </span>
-                </div>
+              <div>
+                <h3 className="text-lg font-semibold">{edu.degree}</h3>
+                <p className="text-sm font-medium text-ink-500">{edu.institution}</p>
+                {edu.description && <p className="mt-2 text-ink-600">{edu.description}</p>}
               </div>
-              
-              <p className="text-secondary-700">{edu.description}</p>
+              <span className="font-mono text-xs text-ink-500 sm:pt-1.5">{edu.period}</span>
             </motion.div>
           ))}
         </div>

@@ -1,142 +1,135 @@
-import React, { useState } from 'react';;
+import { motion } from 'framer-motion'
+import { FaArrowRight, FaExternalLinkAlt } from 'react-icons/fa'
+import { useCV } from '../context/CVContext'
+import Carousel from './Carousel'
+
+const FeaturedProject = ({ project, index }) => (
+  <motion.article
+    className="card overflow-hidden"
+    initial={{ opacity: 0, y: 24 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: '-80px' }}
+    transition={{ duration: 0.5 }}
+  >
+    <div className="grid lg:grid-cols-[1fr_1.5fr]">
+      {/* Meta column */}
+      <div className="flex flex-col justify-between gap-8 bg-ink-900 p-6 text-ink-300 md:p-8">
+        <div>
+          <div className="flex items-center justify-between">
+            <span className="font-mono text-xs text-lime">{String(index + 1).padStart(2, '0')}</span>
+            <span className="rounded-full border border-ink-700 px-3 py-1 font-mono text-[11px] text-ink-300">{project.status}</span>
+          </div>
+          <h3 className="mt-6 text-2xl font-semibold !text-white md:text-3xl">{project.name}</h3>
+          <p className="mt-1 text-sm text-ink-400">{project.context}</p>
+          <p className="mt-5 text-[15px] leading-relaxed text-ink-300">{project.tagline}</p>
+        </div>
+
+        {project.metrics?.length > 0 && (
+          <dl className="grid grid-cols-2 gap-4 border-t border-ink-700 pt-6">
+            {project.metrics.map((m) => (
+              <div key={m.label} className="flex flex-col-reverse">
+                <dd className="font-display text-2xl font-semibold text-white">{m.value}</dd>
+                <dt className="text-xs text-ink-400">{m.label}</dt>
+              </div>
+            ))}
+          </dl>
+        )}
+      </div>
+
+      {/* Content column */}
+      <div className="p-6 md:p-8">
+        {project.flow?.length > 0 && (
+          <div className="mb-7 flex flex-wrap items-center gap-2">
+            {project.flow.map((step, i) => (
+              <span key={step} className="flex items-center gap-2">
+                <span className="rounded-lg bg-brand-50 px-2.5 py-1 font-mono text-[11px] font-medium text-brand-700">{step}</span>
+                {i < project.flow.length - 1 && <FaArrowRight className="text-[10px] text-ink-300" />}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-400">El problema</p>
+        <p className="mt-2 text-ink-700">{project.problem}</p>
+
+        <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-400">Lo que construí</p>
+        <ul className="mt-3 space-y-3">
+          {project.highlights.map((h) => (
+            <li key={h} className="flex gap-3 text-[15px] text-ink-700">
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-400" />
+              <span>{h}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-7 flex flex-wrap gap-2 border-t border-ink-100 pt-6">
+          {project.stack.map((tech) => (
+            <span key={tech} className="chip">{tech}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </motion.article>
+)
+
+const OtherProject = ({ project, index }) => (
+  <motion.article
+    className="card flex flex-col overflow-hidden p-3"
+    initial={{ opacity: 0, y: 16 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.4, delay: (index % 2) * 0.08 }}
+  >
+    <Carousel images={project.images} alt={project.name} />
+    <div className="flex flex-1 flex-col p-3 pt-5">
+      <div className="flex items-start justify-between gap-3">
+        <h4 className="text-lg font-semibold leading-snug">{project.name}</h4>
+        {project.link && (
+          <a href={project.link} target="_blank" rel="noopener noreferrer" aria-label={`Abrir ${project.name}`} className="mt-1 text-ink-400 transition hover:text-ink-900">
+            <FaExternalLinkAlt size={13} />
+          </a>
+        )}
+      </div>
+      <p className="mt-2 flex-1 text-[15px] text-ink-600">{project.text}</p>
+      <div className="mt-4 flex flex-wrap gap-2">
+        {project.stack.map((tech) => (
+          <span key={tech} className="chip">{tech}</span>
+        ))}
+      </div>
+    </div>
+  </motion.article>
+)
 
 const Proyects = () => {
-    const images = [
-        '/BJ-Inicio.png',
-        '/BJ-Tienda.png',
-        '/BJ-Carrito.png',
-        '/BJ-Checkout.png'
-    ];
-    const [currentIndex, setCurrentIndex] = useState(0);
+  const { cv } = useCV()
 
-    const nextSlide = () => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    };
+  return (
+    <section id="projects" className="section bg-white">
+      <div className="container-page">
+        <p className="eyebrow">Proyectos destacados</p>
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <h2 className="section-heading max-w-3xl">Software real, para negocios reales</h2>
+          <p className="max-w-sm text-ink-500">
+            Casos seleccionados. Por confidencialidad muestro arquitectura y decisiones técnicas, no datos de clientes.
+          </p>
+        </div>
 
-    const prevSlide = () => {
-        setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
-    };
-    const images1 = [
-        '/Agente-1.png',
-        '/Agente-2.png',
-        '/Agente-3.png',
-        '/Agente-4.png',
-        '/Agente-5.png',
-        '/Agente-6.png',
-        '/Agente-7.png',
-        '/Agente-8.png',
-        '/Agente-9.png'
-    ];
-    const [currentIndex1, setCurrentIndex1] = useState(0);
+        <div className="mt-14 space-y-6">
+          {cv.featured.map((project, index) => (
+            <FeaturedProject key={project.id} project={project} index={index} />
+          ))}
+        </div>
 
-    const nextSlide1 = () => {
-        setCurrentIndex1((prevIndex1) => (prevIndex1 + 1) % images1.length);
-    };
-
-    const prevSlide1 = () => {
-        setCurrentIndex1((prevIndex1) => (prevIndex1 - 1 + images1.length) % images.length);
-    };
-
-    return(
-        <section id="proyects" className="section bg-secondary-50">
-            <div className="max-w-5xl mx-auto">
-                <div className="flex flex-col md:flex-row items-center justify-between gap-10">
-                    <h2 className="section-title">
-                        Proyectos
-                    </h2>
-                </div>
-                <div className="space-y-10">
-                    <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                        <div className="card border-l-4 border-accent-500 hover:border-accent-600">
-                            <h3 className="text-xl font-semibold text-accent-600">Agente de atencion al cliente - n8n</h3>
-                            <p className="text-lg font-medium text-secondary-700">Desarrollé e implementé un sistema automatizado de atención al cliente y gestión comercial utilizando n8n, Airtable y OpenAI.Creé un agente de WhatsApp con inteligencia artificial capaz de responder automáticamente consultas de clientes, integrado a un CRM personalizado. Diseñé flujos automatizados que centralizan y actualizan la información de prospectos en tiempo real, reduciendo tiempos de respuesta y evitando pérdidas de datos. Integré múltiples herramientas y APIs para mejorar la trazabilidad, el seguimiento de leads y la eficiencia en la comunicación. Logré reducir significativamente las tareas manuales del equipo comercial, mejorando la conversión y profesionalizando el proceso de ventas.</p>
-                            <div style={styles.sliderContainer}>
-                                <button style={{...styles.arrowButton, ...styles.prevButton}} onClick={prevSlide1}>&#10094;</button>
-                                <img src={images1[currentIndex1]} alt="slider" style={styles.image} />
-                                <button style={{...styles.arrowButton, ...styles.nextButton}} onClick={nextSlide1}>&#10095;</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="space-y-10">
-                    <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                        <div className="card border-l-4 border-accent-500 hover:border-accent-600">
-                            <h3 className="text-xl font-semibold text-accent-600">Blackjack Clothes – Tienda online con WordPress + WooCommerce</h3>
-                            <p className="text-lg font-medium text-secondary-700">Desarrollé de forma integral esta tienda e-commerce usando WordPress. Personalicé el diseño para reflejar la identidad de la marca, configuré WooCommerce con pasarela de pagos (Mercado Pago), métodos de envío, y gestioné el catálogo completo de productos. Implementé prácticas de diseño responsive, seguridad básica y optimización de velocidad. El <a href="www.blackjackclothes.com.ar" target="_blank" rel="noopener noreferrer" style={{color: 'blue', textDecoration: 'underline'}}>sitio</a> está publicado, funcional y preparado para escalar.</p>
-                            <div style={styles.sliderContainer}>
-                                <button style={{...styles.arrowButton, ...styles.prevButton}} onClick={prevSlide}>&#10094;</button>
-                                <img src={images[currentIndex]} alt="slider" style={styles.image} />
-                                <button style={{...styles.arrowButton, ...styles.nextButton}} onClick={nextSlide}>&#10095;</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="space-y-10">
-                    <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                        <div className="card border-l-4 border-accent-500 hover:border-accent-600">
-                            <h3 className="text-xl font-semibold text-accent-600">Automatización de generación de preguntas con n8n + Gemini</h3>
-                            <p className="text-lg font-medium text-secondary-700">Desarrollé una automatización completa en n8n para la empresa Eunamed, destinada a generar preguntas de opción múltiple a partir de videos educativos. El proceso toma automáticamente los archivos subidos a una carpeta de Google Drive, extrae el contenido, lo envía a Gemini (modelo LLM) para generar preguntas, y guarda el resultado en Google Sheets con el formato requerido. Esta solución redujo un 70% el tiempo que tomaban los empleados haciendo esta tarea manualmente.</p>
-                            <p className="text-lg font-medium text-secondary-700">Tecnologías aplicadas: n8n, Google Drive API, Google Sheets, Gemini, lógica condicional, automatización de procesos, procesamiento de texto con IA.</p>
-                            <img src="/Automatizacion-preguntas.png" alt="" style={{borderRadius: "10px"}}/>
-                        </div>
-                    </div>
-                </div>
-                <div className="space-y-10">
-                    <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                        <div className="card border-l-4 border-accent-500 hover:border-accent-600">
-                            <h3 className="text-xl font-semibold text-accent-600">Automatización de categorización de preguntas con IA (n8n + Gemini)</h3>
-                            <p className="text-lg font-medium text-secondary-700">Implementé una automatización en n8n para clasificar preguntas generadas por IA según el perfil de conocimientos del examen Eunacom. A través de Google Sheets y Gemini, el sistema analiza cada pregunta y la asigna a una categoría médica correspondiente. El flujo incluye validaciones, procesamiento condicional y control de calidad, reduciendo la carga de revisión manual sin eliminar la supervisión profesional.</p>
-                            <p className="text-lg font-medium text-secondary-700">Tecnologías utilizadas: n8n, Google Sheets, Google Gemini, lógica condicional, categorización con IA, automatización de procesos educativos.</p>
-                            <img src="/Conseguir-codigo.png" alt="" style={{borderRadius: "10px"}}/>
-                        </div>
-                    </div>
-                </div>
-                <div className="space-y-10">
-                    <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                        <div className="card border-l-4 border-accent-500 hover:border-accent-600">
-                            <h3 className="text-xl font-semibold text-accent-600">Automatización del envío de correos por país de origen del título – Eunamed</h3>
-                            <p className="text-lg font-medium text-secondary-700">Desarrollé una solución automatizada en n8n para la empresa Eunamed, orientada al envío de correos electrónicos cada vez que se completaba un formulario de reconocimiento de título. El desafío principal era que, según el país de origen del título, los mails debían dirigirse a distintos destinatarios. Implementé una lógica condicional con múltiples ramas utilizando webhooks, filtros y nodos de Gmail, logrando reducir a cero la intervención humana en esta tarea rutinaria. Esta automatización no solo eliminó errores manuales, sino que liberó tiempo valioso para el equipo administrativo.</p>
-                            <img src="/Reconocimiento-titulo.png" alt="" style={{borderRadius: "10px"}}/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-        </section>
-    )
+        <h3 className="mt-24 text-2xl font-semibold md:text-3xl">Más trabajos</h3>
+        <p className="mt-2 text-ink-500">Automatizaciones, agentes y sitios que ya están funcionando.</p>
+        <div className="mt-8 grid gap-6 md:grid-cols-2">
+          {cv.otherProjects.map((project, index) => (
+            <OtherProject key={project.name} project={project} index={index} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )
 }
 
-const styles = {
-    sliderContainer: {
-        position: 'relative',
-        width: '100%',
-        height: '400px',
-        margin: '20px 0',
-        overflow: 'hidden',
-    },
-    image: {
-        width: '100%',
-        height: '100%',
-        objectFit: 'cover',
-        borderRadius: '10px',
-    },
-    arrowButton: {
-        position: 'absolute',
-        top: '50%',
-        transform: 'translateY(-50%)',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        color: 'white',
-        border: 'none',
-        padding: '10px',
-        cursor: 'pointer',
-        zIndex: 10,
-    },
-    prevButton:{
-        borderRadius:'10px',
-    },
-    nextButton: {
-        borderRadius: '10px',
-        right: '0px',
-    },
-};
-export default Proyects;
+export default Proyects
